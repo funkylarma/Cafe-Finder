@@ -3,28 +3,29 @@
 // BASE SETUP
 // =============================================================================
 
-// call the packages we need
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
+// Load all the packages we need
+var express      = require('express');
+var path         = require('path');
+var bodyParser   = require('body-parser');
+var logger       = require('morgan');
+var compression  = require('compression');
+var cacheTime    = 86400000*7; //a week
+var app          = express();
 
-app.use(bodyParser.urlencoded({ extended: true }));
+// Configure the app
+app.use(compression());
+app.use(logger('dev'));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(__dirname + '/public',{ maxAge: cacheTime }));
 
-// ROUTES FOR OUR API
+// Load the route modules
 // =============================================================================
-var router = express.Router();              // get an instance of the express Router
+var main_routes       = require('./routes/index');
+var api_routes = require('./routes/api');
 
-// test route to make sure everything is working (accessed at GET http://localhost:8080/api)
-router.get('/', function(req, res) {
-    res.json({ message: 'hooray! welcome to our api!' });   
-});
-
-// more routes for our API will happen here
-
-// REGISTER OUR ROUTES -------------------------------
-// all of our routes will be prefixed with /api
-app.use('/api', router);
-
+// Register the routes
+app.use('/', main_routes);
+app.use('/api', api_routes);
 
 module.exports = app;
