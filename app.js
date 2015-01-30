@@ -1,6 +1,4 @@
 // app.js
-
-// BASE SETUP
 // =============================================================================
 
 // Load all the packages we need
@@ -12,6 +10,11 @@ var compression  = require('compression');
 var cacheTime    = 86400000*7; //a week
 var app          = express();
 
+// Configure the database
+var db           = require('./config/db');
+var mongoose     = require('mongoose');
+mongoose.connect(db.url);
+
 // Configure the app
 app.use(compression());
 app.use(logger('dev'));
@@ -20,9 +23,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/public',{ maxAge: cacheTime }));
 
 // Load the route modules
-// =============================================================================
-var main_routes       = require('./routes/index');
-var api_routes = require('./routes/api');
+var main_routes   = require('./routes/index');
+var api_routes    = require('./routes/api');
 
 // Register the routes
 app.use('/', main_routes);
