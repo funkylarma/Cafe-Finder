@@ -20,7 +20,7 @@ router.use(function(req, res, next) {
 router.get('/', function(req, res, next) {
   
   // Just output the Angular ready index template
-  res.sendFile(path.join(__dirname, '../public/views', 'index.html'));
+  res.sendFile(path.join(__dirname, '../../public', 'index.html'));
 });
 
 module.exports = router;

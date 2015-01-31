@@ -25,8 +25,8 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(express.static(__dirname + '/public',{ maxAge: cacheTime }));
 
 // Load the route modules
-var main_routes     = require('./routes/web');
-var api_routes      = require('./routes/api');
+var main_routes     = require('./app/routes/web');
+var api_routes      = require('./app/routes/api');
 
 // Register the routes
 app.use('/', main_routes);
