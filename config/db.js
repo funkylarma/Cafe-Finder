@@ -2,5 +2,6 @@
 // =============================================================================
 
 module.exports = {
-  url : 'mongodb://localhost/cafe-finder'
+  url : 'mongodb://localhost',
+  dbName : 'cafe-finder'
 }

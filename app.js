@@ -15,6 +15,7 @@ var app             = express();
 var db              = require('./config/db');
 var mongoose        = require('mongoose');
 mongoose.connect(db.url);
+mongoose.connect(db.url + '/' + db.dbName);
 
 // Configure the app
 app.use(compression());
