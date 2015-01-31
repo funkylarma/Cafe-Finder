@@ -12,7 +12,7 @@ var Cafe         = require('../models/cafe');
 router.use(function(req, res, next) {
   
   // Log something to the console
-  console.log('Something is happening.');
+  console.log('Accessing the api.');
   
   // Make sure we go to the next routes and don't stop here
   next();

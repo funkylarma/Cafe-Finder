@@ -14,7 +14,6 @@ var app             = express();
 // Configure the database
 var db              = require('./config/db');
 var mongoose        = require('mongoose');
-mongoose.connect(db.url);
 mongoose.connect(db.url + '/' + db.dbName);
 
 // Configure the app
@@ -22,14 +21,16 @@ app.use(compression());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride('X-HTTP-Method-Override')); 
 app.use(express.static(__dirname + '/public',{ maxAge: cacheTime }));
 
 // Load the route modules
-var main_routes     = require('./routes/index');
+var main_routes     = require('./routes/web');
 var api_routes      = require('./routes/api');
 
 // Register the routes
 app.use('/', main_routes);
 app.use('/api', api_routes);
 
+// Export the app
 module.exports = app;
