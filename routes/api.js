@@ -23,7 +23,20 @@ router.get('/', function(req, res) {
   res.json({ message: 'hooray! welcome to our api!' });   
 });
 
+// on routes that end in /cafe/:cafe_id
+router.route('/cafe/:cafe_id')
 
+  // Get the required cafe
+  .get(function(req, res) {
+    Cafe.findById(req.params.cafe_id, function(err, cafe) {
+      if (err) {
+        res.send(err);
+      }
+      
+      res.json(cafe);
+    });
+  });
+  
 // on routes that end in /cafes
 router.route('/cafes')
 
@@ -61,4 +74,5 @@ router.route('/cafes')
     
   });
 
+// Export the router
 module.exports = router;
