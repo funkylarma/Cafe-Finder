@@ -8,7 +8,7 @@ var router       = express.Router();
 // Configure the model entities
 var Cafe         = require('../models/cafe');
 
-// middleware to use for all requests
+// Middleware to use for all requests
 router.use(function(req, res, next) {
   
   // Log something to the console
@@ -18,42 +18,77 @@ router.use(function(req, res, next) {
   next();
 });
 
-// test route to make sure everything is working (accessed at GET http://localhost:8080/api)
+// Test route to make sure everything is working
 router.get('/', function(req, res) {
-  res.json({ message: 'hooray! welcome to our api!' });   
+  
+  // Return a string
+  res.json({ message: 'Welcome to the cafe finder API' });   
 });
 
-// on routes that end in /cafe/:cafe_id
+// On routes that end in /cafe/:cafe_id
 router.route('/cafe/:cafe_id')
 
-  // Get the required cafe
+  // Get the cafe with this id /cafe/:cafe_id
   .get(function(req, res) {
+    
+    // Find the cafe by the id
     Cafe.findById(req.params.cafe_id, function(err, cafe) {
+      
+      // If there was an error
       if (err) {
         res.send(err);
       }
       
+      // Return the cafe
       res.json(cafe);
+    });
+    
+  })
+  
+  // Update the cafe with this id /cafe/:cafe_id
+  .put(function(req, res) {
+    
+  })
+  
+  // Delete the cafe with this id /cafe/:cafe_id
+  .delete(function(req, res) {
+    
+    // Delete the cafe by id
+    Cafe.remove({
+      _id: req.params.cafe_id
+    }, function(err, cafe) {
+      
+      // If there was an error
+      if (err) {
+        res.send(err);
+      }
+      
+      // Return a success message
+      res.json({ message: 'Cafe deleted' });
     });
   });
   
-// on routes that end in /cafes
+// On routes that end in /cafes
 router.route('/cafes')
 
   // Get all the cafes
   .get(function(req, res) {
     
+    // Find all the cafes
     Cafe.find(function(err, cafes) {
+      
+      // If there is an error
       if (err) {
         res.send(err);
       }
       
+      // Return the cafes
       res.json(cafes);
     });
     
   })
 
-  // create a cafe
+  // Post a new cafe
   .post(function(req, res) {
     
     // Create a new instance of a Cafe
@@ -64,12 +99,14 @@ router.route('/cafes')
     
     // Save the cafe and check for errors
     cafe.save(function(err) {
+      
+      // If there was an error
       if (err) {
         res.send(err);
       }
-      res.json({
-        message: 'Cafe created!'
-      });
+      
+      // Return a success string
+      res.json({ message: 'Cafe created!' });
     });
     
   });
