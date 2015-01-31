@@ -45,3 +45,4 @@ node_modules
 *.gz
 .sass-cache
 .sass-cache/*
+public/libs
