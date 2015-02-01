@@ -89,20 +89,23 @@ router.route('/cafes')
   })
 
   // Post a new cafe
-  .post(function(req, res) {
+  .post(function(req, res, next) {
     
     // Create a new instance of a Cafe
     var cafe = new Cafe();
     
     // Set the cafe name from the request
     cafe.name = req.body.name;
+    cafe.location = [req.body.longitude, req.body.latitude];
     
     // Save the cafe and check for errors
     cafe.save(function(err) {
       
       // If there was an error
       if (err) {
-        res.send(err);
+        return res.status(400).send({
+				  message: err.message
+			  });
       }
       
       // Return a success string
