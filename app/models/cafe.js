@@ -21,7 +21,11 @@ var CafeSchema   = new Schema({
 	created_at: {
 		type: Date,
 		default: Date.now
-	}
+	},
+	created_by: { 
+  	type : Schema.ObjectId,
+  	ref : 'Users'
+  }
 });
 
-module.exports = mongoose.model('Cafe', CafeSchema, 'cafes');
+module.exports = mongoose.model('Cafes', CafeSchema);

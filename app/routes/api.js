@@ -6,6 +6,7 @@ var express      = require('express');
 var router       = express.Router();
 
 // Configure the model entities
+var User         = require('../models/user');
 var Cafe         = require('../models/cafe');
 
 // Middleware to use for all requests
@@ -25,6 +26,62 @@ router.get('/', function(req, res) {
   res.json({ message: 'Welcome to the cafe finder API' });   
 });
 
+// On routes that end in /user/:user_id
+router.route('/user/:user_email')
+
+  .get(function(req, res) {
+    
+  });
+
+// On routes that end in /users
+router.route('/users')
+
+  // Get all the cafes
+  .get(function(req, res) {
+    
+    // Find all the cafes
+    User.find(function(err, users) {
+      
+      // If there is an error
+      if (err) {
+        return res.status(400).send({
+				  message: err.message
+			  });
+      }
+      
+      // Return the cafes
+      res.json(users);
+    });
+    
+  })
+  
+  // Post a new cafe
+  .post(function(req, res, next) {
+    
+    // Create a new instance of a Cafe
+    var user = new User();
+    
+    // Set the cafe name from the request
+    user.email = req.body.email;
+    user.name.first = req.body.firstName;
+    user.name.last = req.body.lastName;
+    
+    // Save the cafe and check for errors
+    user.save(function(err) {
+      
+      // If there was an error
+      if (err) {
+        return res.status(400).send({
+				  message: err.message
+			  });
+      }
+      
+      // Return a success string
+      res.json({ message: 'User created', user_id: user._id });
+    });
+    
+  });
+
 // On routes that end in /cafe/:cafe_id
 router.route('/cafe/:cafe_id')
 
@@ -36,7 +93,9 @@ router.route('/cafe/:cafe_id')
       
       // If there was an error
       if (err) {
-        res.send(err);
+        return res.status(400).send({
+				  message: err.message
+			  });
       }
       
       // Return the cafe
@@ -60,7 +119,9 @@ router.route('/cafe/:cafe_id')
       
       // If there was an error
       if (err) {
-        res.send(err);
+        return res.status(400).send({
+				  message: err.message
+			  });
       }
       
       // Return a success message
@@ -79,7 +140,9 @@ router.route('/cafes')
       
       // If there is an error
       if (err) {
-        res.send(err);
+        return res.status(400).send({
+				  message: err.message
+			  });
       }
       
       // Return the cafes
@@ -97,6 +160,7 @@ router.route('/cafes')
     // Set the cafe name from the request
     cafe.name = req.body.name;
     cafe.location = [req.body.longitude, req.body.latitude];
+    cafe.created_by = req.body.userId;
     
     // Save the cafe and check for errors
     cafe.save(function(err) {
@@ -109,7 +173,7 @@ router.route('/cafes')
       }
       
       // Return a success string
-      res.json({ message: 'Cafe created!' });
+      res.json({ message: 'Cafe created', cafe_id: cafe._id });
     });
     
   });
