@@ -24,13 +24,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('X-HTTP-Method-Override')); 
 app.use(express.static(__dirname + '/public',{ maxAge: cacheTime }));
 
-// Load the route modules
-var api_routes      = require('./app/routes/api');
-var main_routes     = require('./app/routes/web');
-
 // Register the routes
-app.use('/', main_routes);
-app.use('/api', api_routes);
+require('./app/routes/api.js')(app);
+require('./app/routes/web.js')(app);
 
 // Export the app
 module.exports = app;

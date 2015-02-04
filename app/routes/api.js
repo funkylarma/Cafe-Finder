@@ -1,182 +1,138 @@
 // routes/api.js
 // =============================================================================
 
-// Load all the packages we need
-var express      = require('express');
-var router       = express.Router();
+module.exports = function(app) {
 
-// Configure the model entities
-var User         = require('../models/user');
-var Cafe         = require('../models/cafe');
-
-// Middleware to use for all requests
-router.use(function(req, res, next) {
+  // Load all the packages we need
+  var express      = require('express');
+  var router       = express.Router();
   
-  // Log something to the console
-  console.log('Accessing the api.');
+  // Configure the model entities
+  var User         = require('../models/user');
+  var Cafe         = require('../models/cafe');
   
-  // Make sure we go to the next routes and don't stop here
-  next();
-});
-
-// Test route to make sure everything is working
-router.get('/', function(req, res) {
-  
-  // Return a string
-  res.json({ message: 'Welcome to the cafe finder API' });   
-});
-
-// On routes that end in /user/:user_id
-router.route('/user/:user_email')
-
-  .get(function(req, res) {
+  // Test route to make sure everything is working
+  router.get('/', function(req, res) {
     
+    // Return a string
+    res.json({ message: 'Welcome to the cafe finder API' });   
   });
-
-// On routes that end in /users
-router.route('/users')
-
-  // Get all the cafes
-  .get(function(req, res) {
-    
+  
+  // Get a user by id /user/:user_id
+  router.get('/user/:user_email', function(req, res, next) {
+    // Just output the Angular ready index template
+    res.sendFile(path.join(__dirname, '../../public', 'index.html'));
+  });
+  
+  // Get all the users /users
+  router.get('/users', function(req, res) {
     // Find all the cafes
     User.find(function(err, users) {
-      
       // If there is an error
       if (err) {
         return res.status(400).send({
 				  message: err.message
 			  });
       }
-      
       // Return the cafes
       res.json(users);
     });
-    
-  })
+  });
   
-  // Post a new cafe
-  .post(function(req, res, next) {
-    
+  // Post a new user
+  router.post('/users', function(req, res, next) {
     // Create a new instance of a Cafe
     var user = new User();
-    
     // Set the cafe name from the request
     user.email = req.body.email;
     user.name.first = req.body.firstName;
     user.name.last = req.body.lastName;
-    
     // Save the cafe and check for errors
     user.save(function(err) {
-      
       // If there was an error
       if (err) {
         return res.status(400).send({
 				  message: err.message
 			  });
       }
-      
       // Return a success string
       res.json({ message: 'User created', user_id: user._id });
     });
-    
   });
-
-// On routes that end in /cafe/:cafe_id
-router.route('/cafe/:cafe_id')
-
-  // Get the cafe with this id /cafe/:cafe_id
-  .get(function(req, res) {
-    
+  
+  // Get a cafe by id /cafe/:cafe_id
+  router.get('/cafe/:cafe_id', function(req, res) {
     // Find the cafe by the id
     Cafe.findById(req.params.cafe_id, function(err, cafe) {
-      
       // If there was an error
       if (err) {
         return res.status(400).send({
 				  message: err.message
 			  });
       }
-      
       // Return the cafe
       res.json(cafe);
     });
-    
-  })
+  });
   
-  // Update the cafe with this id /cafe/:cafe_id
-  .put(function(req, res) {
-    
-  })
+  // Update a cafe by id /cafe/:cafe_id
+  router.put('/cafe/:cafe_id', function(req, res) {
+    // TODO: update the cafe
+  });
   
-  // Delete the cafe with this id /cafe/:cafe_id
-  .delete(function(req, res) {
-    
+  // Delete a cafe by id /cafe/:cafe_id
+  router.delete('/cafe/:cafe_id', function(req, res) {
     // Delete the cafe by id
     Cafe.remove({
       _id: req.params.cafe_id
     }, function(err, cafe) {
-      
       // If there was an error
       if (err) {
         return res.status(400).send({
 				  message: err.message
 			  });
       }
-      
       // Return a success message
       res.json({ message: 'Cafe deleted' });
     });
   });
-  
-// On routes that end in /cafes
-router.route('/cafes')
-
-  // Get all the cafes
-  .get(function(req, res) {
     
+  // Get all the cafes /cafes
+  router.get('/cafes', function(req, res) {
     // Find all the cafes
     Cafe.find(function(err, cafes) {
-      
       // If there is an error
       if (err) {
         return res.status(400).send({
 				  message: err.message
 			  });
       }
-      
       // Return the cafes
       res.json(cafes);
     });
-    
-  })
-
+  });
+  
   // Post a new cafe
-  .post(function(req, res, next) {
-    
+  router.post('/cafes', function(req, res, next) {
     // Create a new instance of a Cafe
     var cafe = new Cafe();
-    
     // Set the cafe name from the request
     cafe.name = req.body.name;
     cafe.location = [req.body.longitude, req.body.latitude];
     cafe.created_by = req.body.userId;
-    
     // Save the cafe and check for errors
     cafe.save(function(err) {
-      
       // If there was an error
       if (err) {
         return res.status(400).send({
 				  message: err.message
 			  });
       }
-      
       // Return a success string
       res.json({ message: 'Cafe created', cafe_id: cafe._id });
     });
-    
   });
-
-// Export the router
-module.exports = router;
+  
+  // Use the router object
+  app.use('/api', router);
+}
