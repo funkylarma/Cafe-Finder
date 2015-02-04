@@ -17,5 +17,9 @@
     "mongoose": "~3.6.13",
     "morgan": "~1.5.1",
     "newrelic": "~1.15.0"
+  },
+  "devDependencies": {
+    "chai": "*",
+    "mocha": "*"
   }
 }
