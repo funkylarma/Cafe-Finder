@@ -1,0 +1,2 @@
+var express=require("express"),app=express();require("./config/app")(express,app),require("./config/db"),require("./config/auth")(app),require("./app/routes/api.js")(app),require("./app/routes/web.js")(app),module.exports=app;
+//# sourceMappingURL=./server-min.js.map

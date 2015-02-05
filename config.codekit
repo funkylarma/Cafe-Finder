@@ -36,6 +36,17 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/public\/js\/server-min.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/public\/js\/server-min.js",
+		"outputAbbreviatedPath": "\/public\/js\/server-min-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 2,
+		"syntaxCheckerStyle": 1
+		},
 	"\/README.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
@@ -48,12 +59,12 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/test\/test.js": {
+	"\/server.js": {
 		"fileType": 64,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/test\/test.js",
-		"outputAbbreviatedPath": "\/public\/js\/test-min.js",
+		"inputAbbreviatedPath": "\/server.js",
+		"outputAbbreviatedPath": "\/public\/js\/server-min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 2,
@@ -688,7 +699,7 @@
 	"sassUseLibsass": 0,
 	"shouldRunAutoprefixer": 0,
 	"shouldRunBless": 0,
-	"skippedItemsString": "node_modules, app.js, \/models, , _logs, .hg, \/public\/libs, _cache, log, \/bin, logs, cache, .svn, \/app\/models, .git, \/config, \/app\/routes, \/test",
+	"skippedItemsString": "node_modules, server.js, \/models, , _logs, .hg, \/public\/libs, _cache, log, \/bin, logs, cache, .svn, \/app\/models, .git, \/config, \/app\/routes, \/test",
 	"slimAutoOutputPathEnabled": 1,
 	"slimAutoOutputPathFilenamePattern": "*.html",
 	"slimAutoOutputPathRelativePath": "",

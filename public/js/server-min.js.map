@@ -1,0 +1,1 @@
+{"version":3,"file":"server-min.js","sources":["../../server.js"],"names":["express","require","app","module","exports"],"mappings":"AAIA,GAAIA,SAAkBC,QAAQ,WAC1BC,IAAkBF,SAGtBC,SAAQ,gBAAgBD,QAASE,KAGjCD,QAAQ,eAGRA,QAAQ,iBAAiBC,KAKzBD,QAAQ,uBAAuBC,KAC/BD,QAAQ,uBAAuBC,KAG/BC,OAAOC,QAAUF"}
