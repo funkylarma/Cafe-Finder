@@ -4,7 +4,8 @@
 var mongoose        = require('mongoose');
 var db              = require('../config/db');
 
-process.env.NODE_ENV = 'test';
+process.env.NODE_ENV = process.env.NODE_ENV || 'test';
+process.env.TEST_ENV = process.env.TEST_ENV || 'test';
 
 beforeEach(function (done) {
 
