@@ -13,23 +13,28 @@ describe('Cafe: model', function() {
 
   describe('#create()', function() {
     
-    it('should create a new Cafe', function (done) {
-     
-     // Create a User object to pass to User.create()
-     var cafe = {
-       
-     };
-     
-     Cafe.create(cafe, function (err, createdCafe) {
-       
-       // Cerify that the returned user is what we expect
-       expect(err).to.be.null;
-       
-       // Call done to tell mocha that we are done with this test
-       done();
-     });
+    var cafe = null;
+    
+    beforeEach(function(done) {
+      // Create a User object to pass to User.create()
+      cafe = new Cafe();
+      cafe.name = "Huffers";
+      
+      done();
+    });
+    
+    it('new cafe instance should have a name', function(done) {
+      expect(cafe.name).to.be.equal('Huffers');
+      done();
+    });
+    
+    it('new instance should have a geolocation');
+    
+    it('new instance should be created by a user');
+    
+    it('new instance should get saved to the databse');
 
-   });
   });
-
+   
+   
 });
