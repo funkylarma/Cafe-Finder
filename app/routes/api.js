@@ -19,14 +19,14 @@ module.exports = function(app) {
   });
   
   // Get a user by id /user/:user_id
-  router.get('/user/:user_email', function(req, res, next) {
+  router.get('/user/:user_id', function(req, res, next) {
     // Just output the Angular ready index template
     res.sendFile(path.join(__dirname, '../../public', 'index.html'));
   });
   
   // Get all the users /users
   router.get('/users', function(req, res) {
-    // Find all the cafes
+    // Find all the users
     User.find(function(err, users) {
       // If there is an error
       if (err) {
@@ -34,20 +34,20 @@ module.exports = function(app) {
 				  message: err.message
 			  });
       }
-      // Return the cafes
+      // Return the users
       res.json(users);
     });
   });
   
   // Post a new user
   router.post('/users', function(req, res, next) {
-    // Create a new instance of a Cafe
+    // Create a new instance of a User
     var user = new User();
-    // Set the cafe name from the request
+    // Set the user name from the request
     user.email = req.body.email;
     user.name.first = req.body.firstName;
     user.name.last = req.body.lastName;
-    // Save the cafe and check for errors
+    // Save the user and check for errors
     user.save(function(err) {
       // If there was an error
       if (err) {
@@ -56,7 +56,7 @@ module.exports = function(app) {
 			  });
       }
       // Return a success string
-      res.json({ message: 'User created', user_id: user._id });
+      res.json({ message: 'User created', date: user });
     });
   });
   

@@ -20,9 +20,11 @@ var UserSchema   = new Schema({
       trim: true
     }
   },
-  password: {
-    type: String,
-    
+  hash: {
+    type: String
+  },
+  salt: {
+    type: String
   },
   updated_at: {
 		type: Date
